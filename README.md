@@ -1,3 +1,0 @@
-# WA-Projekt-Backend
-
-# yo
