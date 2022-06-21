@@ -45,9 +45,7 @@ app.get('/trgovina', (req, res,) => {
 
 app.get('/profil', (req, res) => {
   let profil = [
-    {podaci: [
-      {ime: "Ivan", prezime: "Ivanic", korisnickoIme: "ivan69"}
-    ],
+    {ime: "Ivan", prezime: "Ivanic", korisnickoIme: "ivan69",
     upecaneRibe: [
       { vrsta: "Pastrva", voda: "Slatkovodna", tezina: "500", mjesto: "Dunav" },
       { vrsta: "Pastrva", voda: "Slatkovodna", tezina: "300", mjesto: "Dunav" },
