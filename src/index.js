@@ -1,16 +1,46 @@
 import express from "express";
 import cors from "cors";
 
+import connect from "./db.js";
+
 const app = express()
 const port = 3000
 
 app.use(express.json());
 app.use(cors());
 
+app.get("/test", async (req, res) => {
+  console.log("OK");
+  let db = await connect();
+  res.json([]);
+});
+
+
 app.get('/fish', (req, res) => {
     let ribe = [
-      { vrsta: "Pastrva", voda: "Slatkovodna" },
+      { vrsta: "Pastrva", voda: "Slatkovodna", lokacija: "Rijeke" },
       { vrsta: "Srdela", voda: "Slanovodna" },
+      { vrsta: "Oslić", voda: "Slanovodna" },
+      {vrsta: "brancin", voda: "Slanovodna", lokacija: "Istra, Kvarner JuznaDalamacija"},
+      {vrsta: "orada", voda: "Slanovodna", lokacija: "Istra, Kvarner, JuznaDalmacija"},
+      {vrsta: "zubatac", voda:"Slanovodna", lokacija: "Istra, JuznaDalmacija"},
+      {vrsta: "cipal", voda: "Slanovodna", lokacija: "Istra, JuznaDalmacija"},
+      {vrsta: "škarpina", voda: "Slanovodna", lokacija: "Istra, Kvarner, JuznaDalmacija"},
+      {vrsta: "arbun", voda: "Slanovodna", lokacija: "Istra"},
+      {vrsta: "trilja", voda: "Slanovodna", lokacija: "Istra, JuznaDalmacija"},
+      {vrsta: "ugor", voda: "Slanovodna", lokacija: "Istra"},
+      {vrsta: "morska mačka", voda: "Slanovodna", lokacija: "Kvarner"},
+      {vrsta: "skuša", voda: "Slanovodna", lokacija: "Kvarner"},
+      {vrsta: "tuna", voda: "Slanovodna", lokacija: "SrednaDalmacija"},
+      {vrsta: "Špar", voda: "Slanovodna", lokacija: "SrednjaDalmacija"},
+      {vrsta: "šaran", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "som", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "smuđ", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "štuka", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "kečiga", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "lipljen", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "mladica", voda: "Slatkovodna", lokacija: "rijeke"},
+      {vrsta: "šaran", voda: "Slatkovodna", lokacija: "rijeke"},
     ];
     res.status(200);
   res.send(ribe)
