@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import mongo from "mongodb";
 
 import connect from "./db.js";
 
@@ -31,6 +32,51 @@ app.post("/test", async (req, res) =>{
   res.send();
 });
 
+app.put('/test/:id', async (req, res) => {
+  let doc = req.body;
+  // ako postoji, brišemo _id u promjenama (želimo da ostane originalni _id)
+  delete doc._id;
+
+  let id = req.params.id;
+  let db = await connect();
+
+  let result = await db.collection('test').replaceOne({ _id:
+ mongo.ObjectId(id) }, doc);
+  if (result.modifiedCount == 1) {
+    res.json({
+      status: 'success',
+      id: result.insertedId,
+    });
+  } else {
+    res.json({
+      status: 'fail',
+    });
+  }
+});
+
+app.patch('/test/:id', async (req, res) => {
+  let doc = req.body;
+  delete doc._id;
+  let id = req.params.id;
+  let db = await connect();
+
+  let result = await db.collection('test').updateOne(
+    { _id: mongo.ObjectId(id) },
+    {
+    $set: doc,
+   }
+  );
+  if (result.modifiedCount == 1) {
+    res.json({
+      status: 'success',
+      id: result.insertedId,
+    });
+  } else {
+    res.json({
+      status: 'fail',
+    });
+  }
+});
 
 app.get('/fish', (req, res) => {
     let ribe = [
