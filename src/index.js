@@ -10,9 +10,25 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/test", async (req, res) => {
-  console.log("OK");
   let db = await connect();
-  res.json([]);
+  let kolekcija = db.collection("test");
+  let cursor = await kolekcija.find();
+  let data = await cursor.toArray();
+
+  res.json(data);
+});
+
+app.post("/test", async (req, res) =>{
+  let doc = req.body;
+  console.log(doc);
+
+  let db = await connect();
+  let kolekcija = db.collection("test");
+
+  let result = await kolekcija.insertOne(doc);
+
+  res.status(201);
+  res.send();
 });
 
 
