@@ -78,6 +78,28 @@ app.patch('/test/:id', async (req, res) => {
   }
 });
 
+
+app.delete('/test/:id', async (req, res) => {
+  let db = await connect();
+  let id = req.params.id;
+
+  let result = await db.collection('test').deleteOne(
+    { _id: mongo.ObjectId(id) },
+    {
+    $pull: { _id: mongo.ObjectId(id) },
+    }
+  );
+  if (result.modifiedCount == 1) {
+    res.statusCode = 201;
+    res.send();
+  } else {
+    res.statusCode = 500;
+    res.json({
+      status: 'fail',
+    });
+  }
+});
+
 app.get('/fish', (req, res) => {
     let ribe = [
       { vrsta: "Pastrva", voda: "Slatkovodna", lokacija: "Rijeke" },
