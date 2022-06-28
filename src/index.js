@@ -19,6 +19,28 @@ app.get("/test", async (req, res) => {
   res.json(data);
 });
 
+app.get("/upecane/ribe", async (req, res) => {
+  let db = await connect();
+  let kolekcija = db.collection("upecano");
+  let cursor = await kolekcija.find();
+  let data = await cursor.toArray();
+
+  res.json(data);
+});
+
+app.post("/upecane/ribe", async (req, res) =>{
+  let doc = req.body;
+  console.log(doc);
+
+  let db = await connect();
+  let kolekcija = db.collection("upecano");
+
+  let result = await kolekcija.insertOne(doc);
+
+  res.status(201);
+  res.send();
+});
+
 app.post("/test", async (req, res) =>{
   let doc = req.body;
   console.log(doc);
