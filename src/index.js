@@ -131,6 +131,38 @@ app.patch('/test/:id', async (req, res) => {
   }
 });
 
+app.patch('/wallet/:id', async (req, res) => {
+  let doc = req.body;
+  delete doc._id;
+  let id = req.params.id;
+  let db = await connect();
+
+  let result = await db.collection('wallet').updateOne(
+    { _id: mongo.ObjectId(id) },
+    {
+    $set: doc,
+   }
+  );
+  if (result.modifiedCount == 1) {
+    res.json({
+      status: 'success',
+      id: result.insertedId,
+    });
+  } else {
+    res.json({
+      status: 'fail',
+    });
+  }
+});
+
+app.get("/wallet", async (req, res) => {
+  let db = await connect();
+  let kolekcija = db.collection("wallet");
+  let cursor = await kolekcija.find();
+  let data = await cursor.toArray();
+
+  res.json(data);
+});
 
 app.delete('/test/:id', async (req, res) => {
   let db = await connect();
