@@ -1,14 +1,19 @@
 ### How to download the repository and run the Backend locally:
 
 1. Clone the repository:
-   ```
+
+   ```javascript
    git clone https://github.com/FilipK19/WA-Projekt-Backend.git
    ```
+
 2. Install NPM packages:
-   ```
+
+   ```javascript
    npm install
    ```
+
 3. Run the aplication locally on port 5000:
-   ```
+
+   ```javascript
    npm run serve
    ```
