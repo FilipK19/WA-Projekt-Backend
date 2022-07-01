@@ -21,14 +21,9 @@ app.get("/fishdb", async (req, res) => {
 });
 
 
-app.get("/", async (req, res) => {
-  let db = await connect();
-  let kolekcija = db.collection("Fish");
-  let cursor = await kolekcija.find();
-  let data = await cursor.toArray();
-
-  res.json(data);
-});
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 app.post("/fishdb", async (req, res) =>{
   let doc = req.body;
