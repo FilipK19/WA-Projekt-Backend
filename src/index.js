@@ -87,7 +87,7 @@ app.post("/caughtfish", async (req, res) =>{
   res.send();
 });
 
-app.put('/test1/:id', async (req, res) => {
+app.put('/test/:id', async (req, res) => {
   let doc = req.body;
   delete doc._id;
   let id = req.params.id;
