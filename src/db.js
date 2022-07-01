@@ -3,7 +3,7 @@ import mongo from "mongodb";
 console.log("OK")
 
 // zamijeni sa svojim connection stringom
-let connection_string = "mongodb://localhost";
+let connection_string = "mongodb+srv://admin:1234@cluster0.1cbo1.mongodb.net/?retryWrites=true&w=majority";
 let client = new mongo.MongoClient(connection_string, {
  useNewUrlParser: true,
  useUnifiedTopology: true
