@@ -23,7 +23,7 @@ app.get("/fishdb", async (req, res) => {
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-})
+});
 
 app.post("/fishdb", async (req, res) =>{
   let doc = req.body;
