@@ -20,6 +20,7 @@ app.get("/fishdb", async (req, res) => {
   res.json(data);
 });
 
+
 app.get("/", async (req, res) => {
   let db = await connect();
   let kolekcija = db.collection("Fish");
@@ -86,7 +87,7 @@ app.post("/caughtfish", async (req, res) =>{
   res.send();
 });
 
-app.put('/test/:id', async (req, res) => {
+app.put('/test1/:id', async (req, res) => {
   let doc = req.body;
   delete doc._id;
   let id = req.params.id;
