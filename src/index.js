@@ -154,9 +154,8 @@ app.delete('/rent/:id', async (req, res) => {
       status: 'fail',
     });
   }
-});
+}).listen(process.env.PORT || 5000);
 
 
-app.listen(process.env.PORT || 5000)(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+
+console.log(`Example app listening on port ${port}`)
