@@ -18,7 +18,7 @@ function isConnected() {
 export default async () => {
     if (!db || !isConnected()) {
         await client.connect();
-        db = client.db("test");
+        db = client.db("Database");
         console.log("Connected OK");
     }
     return db;

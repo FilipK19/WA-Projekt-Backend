@@ -10,27 +10,32 @@ const port = 3000
 app.use(express.json());
 app.use(cors());
 
-app.get("/test", async (req, res) => {
+
+app.get("/fishdb", async (req, res) => {
   let db = await connect();
-  let kolekcija = db.collection("test");
+  let kolekcija = db.collection("Fish");
   let cursor = await kolekcija.find();
   let data = await cursor.toArray();
 
   res.json(data);
 });
 
-app.get("/profil", async (req, res) => {
-  let db = await connect();
-  let kolekcija = db.collection("profil");
-  let cursor = await kolekcija.find();
-  let data = await cursor.toArray();
+app.post("/fishdb", async (req, res) =>{
+  let doc = req.body;
+  console.log(doc);
 
-  res.json(data);
+  let db = await connect();
+  let kolekcija = db.collection("Fish");
+
+  let result = await kolekcija.insertOne(doc);
+
+  res.status(201);
+  res.send();
 });
 
 app.get("/rent", async (req, res) => {
   let db = await connect();
-  let kolekcija = db.collection("rent");
+  let kolekcija = db.collection("RentedEquipment");
   let cursor = await kolekcija.find();
   let data = await cursor.toArray();
 
@@ -42,7 +47,7 @@ app.post("/rent/add", async (req, res) =>{
   console.log(doc);
 
   let db = await connect();
-  let kolekcija = db.collection("rent");
+  let kolekcija = db.collection("RentedEquipment");
 
   let result = await kolekcija.insertOne(doc);
 
@@ -50,56 +55,21 @@ app.post("/rent/add", async (req, res) =>{
   res.send();
 });
 
-app.get("/upecane/ribe", async (req, res) => {
+app.get("/caughtfish", async (req, res) => {
   let db = await connect();
-  let kolekcija = db.collection("upecano");
+  let kolekcija = db.collection("CaughtFish");
   let cursor = await kolekcija.find();
   let data = await cursor.toArray();
 
   res.json(data);
 });
 
-app.post("/upecane/ribe", async (req, res) =>{
+app.post("/caughtfish", async (req, res) =>{
   let doc = req.body;
   console.log(doc);
 
   let db = await connect();
-  let kolekcija = db.collection("upecano");
-
-  let result = await kolekcija.insertOne(doc);
-
-  res.status(201);
-  res.send();
-});
-
-app.get("/trgovina", async (req, res) => {
-  let db = await connect();
-  let kolekcija = db.collection("trgovina");
-  let cursor = await kolekcija.find();
-  let data = await cursor.toArray();
-
-  res.json(data);
-});
-
-app.post("/trgovina", async (req, res) =>{
-  let doc = req.body;
-  console.log(doc);
-
-  let db = await connect();
-  let kolekcija = db.collection("trgovina");
-
-  let result = await kolekcija.insertOne(doc);
-
-  res.status(201);
-  res.send();
-});
-
-app.post("/test", async (req, res) =>{
-  let doc = req.body;
-  console.log(doc);
-
-  let db = await connect();
-  let kolekcija = db.collection("test");
+  let kolekcija = db.collection("CaughtFish");
 
   let result = await kolekcija.insertOne(doc);
 
@@ -127,37 +97,13 @@ app.put('/test/:id', async (req, res) => {
   }
 });
 
-app.patch('/test/:id', async (req, res) => {
-  let doc = req.body;
-  delete doc._id;
-  let id = req.params.id;
-  let db = await connect();
-
-  let result = await db.collection('test').updateOne(
-    { _id: mongo.ObjectId(id) },
-    {
-    $set: doc,
-   }
-  );
-  if (result.modifiedCount == 1) {
-    res.json({
-      status: 'success',
-      id: result.insertedId,
-    });
-  } else {
-    res.json({
-      status: 'fail',
-    });
-  }
-});
-
 app.patch('/wallet/:id', async (req, res) => {
   let doc = req.body;
   delete doc._id;
   let id = req.params.id;
   let db = await connect();
 
-  let result = await db.collection('wallet').updateOne(
+  let result = await db.collection('Wallet').updateOne(
     { _id: mongo.ObjectId(id) },
     {
     $set: doc,
@@ -177,39 +123,18 @@ app.patch('/wallet/:id', async (req, res) => {
 
 app.get("/wallet", async (req, res) => {
   let db = await connect();
-  let kolekcija = db.collection("wallet");
+  let kolekcija = db.collection("Wallet");
   let cursor = await kolekcija.find();
   let data = await cursor.toArray();
 
   res.json(data);
 });
 
-app.delete('/test/:id', async (req, res) => {
-  let db = await connect();
-  let id = req.params.id;
-
-  let result = await db.collection('test').deleteOne(
-    { _id: mongo.ObjectId(id) },
-    {
-    $pull: { _id: mongo.ObjectId(id) },
-    }
-  );
-  if (result.modifiedCount == 1) {
-    res.statusCode = 201;
-    res.send();
-  } else {
-    res.statusCode = 500;
-    res.json({
-      status: 'fail',
-    });
-  }
-});
-
 app.delete('/rent/:id', async (req, res) => {
   let db = await connect();
   let id = req.params.id;
 
-  let result = await db.collection('rent').deleteOne(
+  let result = await db.collection('RentedEquipment').deleteOne(
     { _id: mongo.ObjectId(id) },
     {
     $pull: { _id: mongo.ObjectId(id) },
@@ -225,6 +150,7 @@ app.delete('/rent/:id', async (req, res) => {
     });
   }
 });
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
